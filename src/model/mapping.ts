@@ -5,6 +5,7 @@ export type MesasMapping = {
   materia: number | null
   carrera: number | null
   titular: number | null
+  acompaniante: number | null
   acompaniantes: number[]
   docente: number | null
   rol: number | null
@@ -133,7 +134,20 @@ export function detectMesasMapping(headers: string[]): MesasMapping {
   const docente = claim(DOCENTE)
   const rol = claim(ROL)
 
-  return { headerRow: 0, fecha, hora, materia, carrera, titular, acompaniantes, docente, rol, carreraNombre: '', resolucion: '' }
+  return {
+    headerRow: 0,
+    fecha,
+    hora,
+    materia,
+    carrera,
+    titular,
+    acompaniante: acompaniantes.length ? acompaniantes[0] : null,
+    acompaniantes,
+    docente,
+    rol,
+    carreraNombre: '',
+    resolucion: '',
+  }
 }
 
 export function detectCorreosMapping(headers: string[]): CorreosMapping {
@@ -153,7 +167,10 @@ export function extractSheetMeta(
   const pre = values.slice(0, Math.max(0, headerRow))
   const texts: string[] = []
   pre.forEach((row) => {
-    const joined = row.map((cell) => (cell ?? '').trim()).filter(Boolean).join(' ')
+    const joined = row
+      .map((cell) => (cell ?? '').trim())
+      .filter(Boolean)
+      .join(' ')
     if (joined) texts.push(joined)
   })
 
@@ -164,7 +181,11 @@ export function extractSheetMeta(
       if (!resolucion) resolucion = text
       continue
     }
-    if (!carreraNombre && text.length >= 4 && !/fecha|materia|titular|vocal|email|correo/i.test(text)) {
+    if (
+      !carreraNombre &&
+      text.length >= 4 &&
+      !/fecha|materia|titular|vocal|email|correo/i.test(text)
+    ) {
       carreraNombre = text
     }
   }

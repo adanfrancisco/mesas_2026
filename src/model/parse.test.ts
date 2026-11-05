@@ -9,6 +9,7 @@ const mesasMapping: MesasMapping = {
   materia: 2,
   carrera: 3,
   titular: 4,
+  acompaniante: 5,
   acompaniantes: [5],
   docente: null,
   rol: null,

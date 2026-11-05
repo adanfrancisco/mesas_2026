@@ -53,6 +53,7 @@ export function ColumnMappingPanel({ mesas, correos, onApply, onChangeSheets }: 
       [mesasMapping.hora, 'hora'],
       [mesasMapping.materia, 'materia'],
       [mesasMapping.carrera, 'carrera'],
+      [mesasMapping.acompaniante, 'acompaniante'],
       [mesasMapping.titular, 'titular'],
       [mesasMapping.docente, 'docente'],
       [mesasMapping.rol, 'rol'],
@@ -77,7 +78,7 @@ export function ColumnMappingPanel({ mesas, correos, onApply, onChangeSheets }: 
       return
     }
     if (mesasMapping.titular === null && mesasMapping.docente === null) {
-      setError('Mapeá la columna de Titular (o de Docente, si la hoja no distingue rol).')
+      setError('Mapeá la columna de Docente Titular (o de Docente, si la hoja no distingue rol).')
       return
     }
     if (correosMapping.nombre === null || correosMapping.email === null) {
@@ -153,9 +154,7 @@ export function ColumnMappingPanel({ mesas, correos, onApply, onChangeSheets }: 
           <input
             type="text"
             value={mesasMapping.carreraNombre}
-            onChange={(e) =>
-              setMesasMapping({ ...mesasMapping, carreraNombre: e.target.value })
-            }
+            onChange={(e) => setMesasMapping({ ...mesasMapping, carreraNombre: e.target.value })}
             placeholder="Ej.: Tecnicatura Superior en Desarrollo de Software"
           />
         </label>
@@ -169,10 +168,16 @@ export function ColumnMappingPanel({ mesas, correos, onApply, onChangeSheets }: 
           />
         </label>
         <ColumnSelect
-          label="Titular"
+          label="Docente Titular"
           value={mesasMapping.titular}
           headers={mesasHeaders}
           onChange={(value) => setMesasMapping({ ...mesasMapping, titular: value })}
+        />
+        <ColumnSelect
+          label="Acompañante"
+          value={mesasMapping.acompaniante}
+          headers={mesasHeaders}
+          onChange={(value) => setMesasMapping({ ...mesasMapping, acompaniante: value })}
         />
         <ColumnSelect
           label="Docente (si no hay columna de rol)"

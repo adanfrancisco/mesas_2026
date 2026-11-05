@@ -51,7 +51,11 @@ export function parseMesas(values: string[][], mapping: MesasMapping): ParseMesa
     if (mapping.titular !== null) {
       const titular = cell(row, mapping.titular)
       if (titular) participaciones.push({ nombre: titular, rol: 'titular' })
-      for (const column of mapping.acompaniantes) {
+      const accompaniedColumns = [...mapping.acompaniantes]
+      if (mapping.acompaniante !== null && !accompaniedColumns.includes(mapping.acompaniante)) {
+        accompaniedColumns.push(mapping.acompaniante)
+      }
+      for (const column of accompaniedColumns) {
         for (const nombre of splitNames(cell(row, column))) {
           participaciones.push({ nombre, rol: 'acompaniante' })
         }

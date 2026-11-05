@@ -377,6 +377,23 @@ error, connect, disconnect}`; maneja `onError` y `onNonOAuthError`
 - La API de Gmail no permite "dejar en cola" correos: o `send` (va a Enviados) o
   `drafts.create` (va a Borradores). El usuario eligió borradores → scope `gmail.compose`.
 
+### 2026-11-05 — Ajuste: campos Docente Titular y Acompañante en el mapeo (paso 2)
+
+**Realizado:**
+
+- `src/model/mapping.ts`: nuevo campo `acompaniante` en `MesasMapping` (columna
+  principal de acompañante), detectado automáticamente a partir de la primera columna
+  de acompañantes.
+- `src/model/parse.ts`: el parser combina `acompaniante` con `acompaniantes`,
+  evitando duplicar columnas.
+- `src/components/ColumnMappingPanel.tsx`: renombrado el campo visible "Titular" a
+  "Docente Titular" y agregado el select "Acompañante" entre los campos principales
+  (antes estaba solo como checkboxes de acompañantes).
+
+**Validación:** `npm run build`, `npm run lint` y `npm test` (28 tests) en verde.
+
+---
+
 ## Siguiente paso
 
 **Fuera del código (cuentas del usuario):** 1) OAuth Client ID + `.env` (guía
